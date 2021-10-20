@@ -24,8 +24,8 @@ public class CricketX extends Game {
 	public void changeScreen(int screen){
 		switch (screen){
 			case MENU:{
-				if(loadingScreen==null) loadingScreen = new LoadingScreen(this);
-				this.setScreen(loadingScreen);
+				if(menuScreen==null) menuScreen = new MenuScreen(this);
+				this.setScreen(menuScreen);
 				break;
 			}
 			case SETTING:{
