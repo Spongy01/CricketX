@@ -48,12 +48,12 @@ public class CricketX extends Game {
 	
 	@Override
 	public void create () {
-		System.out.println("In create Method");
+
 	}
 
 	@Override
 	public void render () {
-		System.out.println("In render method");
+
 	}
 	
 	@Override
