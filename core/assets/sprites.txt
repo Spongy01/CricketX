@@ -1,0 +1,19 @@
+sprites.png
+size: 24, 117
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ball
+  rotate: false
+  xy: 1, 1
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+Bat
+  rotate: false
+  xy: 1, 25
+  size: 18, 91
+  orig: 18, 91
+  offset: 0, 0
+  index: -1
