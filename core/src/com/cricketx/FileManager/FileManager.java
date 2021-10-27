@@ -42,11 +42,11 @@ public class FileManager {
         sc = null;
     }
 
-    protected static boolean setToWrite() throws IOException {
+    protected static boolean setToWrite(boolean append) throws IOException {
         if(file==null){
             return false;
         }
-        fw = new FileWriter(file,true);
+        fw = new FileWriter(file,append);
         return true;
     }
     protected static boolean clearFile() throws IOException {
@@ -61,7 +61,6 @@ public class FileManager {
     protected static void writeLine(String line) throws IOException {
         fw.write(line);
         fw.write("\n");
-        fw.write(line);
 
     }
     protected static void closeWriter() throws IOException {
