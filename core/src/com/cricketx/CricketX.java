@@ -2,8 +2,15 @@ package com.cricketx;
 
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.audio.Sound;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.cricketx.FileManager.Settings;
+import com.cricketx.Loader.AssetLoader;
 import com.cricketx.Screens.*;
+
+import java.io.IOException;
 
 
 public class CricketX extends Game {
@@ -13,11 +20,20 @@ public class CricketX extends Game {
 	private MenuScreen menuScreen;
 	private SettingScreen settingScreen;
 	private ExitScreen exitScreen;
+	private PauseScreen pauseScreen;
+	private GameOver gameOver;
+	public SpriteBatch batch;
+	public AssetLoader loader = new AssetLoader();
+	public Skin skin;
+	public Settings setting;
+	public HUD hud;
 
-	private final static int MENU=0;
-	private final static int SETTING=1;
-	private final static int GAME=2;
-	private final static int ENDGAME=3;
+	public final static int MENU=0;
+	public final static int SETTING=1;
+	public final static int GAME=2;
+	public final static int ENDGAME=3;
+	public final static int PAUSE = 4;
+	public final static int GAMEOVER = 5;
 
 
 
@@ -43,21 +59,41 @@ public class CricketX extends Game {
 				this.setScreen(mainScreen);
 				break;
 			}
+			case PAUSE:{
+				if (pauseScreen==null)pauseScreen = new PauseScreen(this);
+				this.setScreen(pauseScreen);
+				break;
+			}
+			case GAMEOVER:{
+				if(gameOver==null)gameOver = new GameOver(this);
+				this.setScreen(gameOver);
+				break;
+			}
 		}
 	}
 	
 	@Override
 	public void create () {
-
+		loadingScreen = new LoadingScreen(this);
+		batch = new SpriteBatch();
+		try {
+			setting = new Settings();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.setScreen(loadingScreen);
+	}
+	public void setData() throws IOException {
+		setting.setData();
 	}
 
 	@Override
 	public void render () {
-
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-
+		batch.dispose();
 	}
 }
