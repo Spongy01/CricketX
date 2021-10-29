@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class FileManager {
+public class FileManager{
     static Scanner sc = null;
     static FileWriter fw = null;
     static File file;

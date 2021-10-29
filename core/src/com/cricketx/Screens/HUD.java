@@ -54,7 +54,7 @@ public class HUD {
         score.setVisible(true);
         score.setDebug(true);
         parent = p;
-        score_label = new Label("Score : "+formatedScore, parent.skin,"black");
+        score_label = new Label("Score : "+formatedScore, parent.skin,"font","black");
         score.add(score_label).pad(10,10,20,10);
         stage.addActor(score);
         stage.addActor(pausemenu);

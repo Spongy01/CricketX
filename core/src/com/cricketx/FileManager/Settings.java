@@ -65,6 +65,7 @@ public class Settings extends FileManager{
             writeLine("<isSound>"+isSound+"</isSound>");
             writeLine("<musicVol>"+musicVol+"</musicVol>");
             writeLine("<soundVol>"+soundVol+"</soundVol>");
+            System.out.println("Wrote Data to settings file");
         }
         closeWriter();
         closeFile();

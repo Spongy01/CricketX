@@ -41,7 +41,11 @@ public class GameOver implements Screen {
         TextButton gameover = new TextButton("GameOver",skin,"unclickable");
         table.add(gameover).pad(10,10,10,10).colspan(2);
         TextButton scoreButton = new TextButton("Score: "+score,skin,"unclickable-small");
-        TextButton highScoreButton = new TextButton("HighScore: "+score,skin,"unclickable-small");
+        int playerHighscore = parent.userData.getUserScore(parent.currentPlayer);
+        if(score>playerHighscore){
+            parent.userData.setUserScore(parent.currentPlayer,score);
+        }
+        TextButton highScoreButton = new TextButton("HighScore: "+parent.userData.getUserScore(parent.currentPlayer),skin,"unclickable-small");
         TextButton endgame =  new TextButton("Exit",skin,"small");
         table.row().pad(10,0,10,0);
         table.add(scoreButton);
