@@ -1,21 +1,24 @@
 package com.cricketx.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cricketx.CricketX;
+import com.cricketx.FileManager.UserData;
+import sun.tools.jconsole.Tab;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 
@@ -27,7 +30,8 @@ public class MenuScreen implements Screen {
     Skin skin;
     int width = 1920/2;
     int height = 1080/2;
-    boolean isCorrected= false;
+    boolean isCorrected = false;
+    boolean userLimitExceeded = false;
     public static boolean didGameOvercall=false;
     Texture background;
     Viewport viewport;
@@ -39,6 +43,8 @@ public class MenuScreen implements Screen {
         skin = parent.skin;
 
     }
+
+
     @Override
     public void show() {
         stage = new Stage(viewport);
@@ -49,10 +55,11 @@ public class MenuScreen implements Screen {
         TextButton newGame = new TextButton("New Game", skin);
         TextButton settings = new TextButton("Settings",skin);
         TextButton exit = new TextButton("Exit",skin);
-
+        final SelectBox<String> box = new SelectBox<String>(skin);
+        box.setItems(parent.userData.getNamesList());
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         table.add(newGame).fillX().uniformX();
         table.row().pad(10,0,10,0);
         table.add(settings).fillX().uniformX();
@@ -65,6 +72,149 @@ public class MenuScreen implements Screen {
         }
         stage.addActor(table);
 
+
+        //user
+        Table usercolum = new Table();
+        usercolum.top().right();
+        usercolum.setFillParent(true);
+        usercolum.setDebug(true);
+        usercolum.add(box).pad(20,5,10,5);
+        usercolum.row().pad(5);
+        final TextButton adduser = new TextButton("+ User",skin,"small");
+        final TextButton removeuser = new TextButton("Remove current User",skin,"small");
+
+
+        usercolum.add(adduser);
+        usercolum.row();
+        usercolum.add(removeuser);
+        stage.addActor(usercolum);
+
+        final Dialog dialog = new Dialog("Add User",skin){
+            @Override
+            protected void result(Object object) {
+                System.out.println("result: "+object);
+            }
+        };
+        dialog.setSize(300,300);
+        dialog.setPosition(Gdx.graphics.getWidth()/2-150,Gdx.graphics.getHeight()/2-150);
+        dialog.setVisible(false);
+        stage.addActor(dialog);
+        adduser.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dialog.setVisible(true);
+            }
+        });
+
+        final Dialog userdelete = new Dialog("User",skin){
+            @Override
+            protected void result(Object object) {
+                super.result(object);
+            }
+        };
+        userdelete.setSize(300,300);
+        userdelete.setPosition(Gdx.graphics.getWidth()/2-150,Gdx.graphics.getHeight()/2-150);
+        userdelete.setVisible(false);
+        stage.addActor(userdelete);
+        Table contentforuserdelete = new Table();
+        Label deletetext = new Label("User Deleted : ",skin,"font","black");
+        contentforuserdelete.add(deletetext);
+        Table buttontable = new Table();
+        TextButton okay = new TextButton("Ok",skin,"small");
+        buttontable.add(okay);
+        okay.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                userdelete.setVisible(false);
+            }
+        });
+
+        userdelete.getContentTable().add(contentforuserdelete);
+        userdelete.getButtonTable().add(buttontable);
+
+
+
+
+        removeuser.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.userData.deleteUser(box.getSelected());
+                userdelete.setVisible(true);
+                box.setItems(parent.userData.getNamesList());
+            }
+        });
+
+        Table contentTable = new Table();
+        Label label = new Label("Name : ",skin,"font","black");
+        contentTable.add(label).pad(5);
+        final TextField entry = new TextField("",skin);
+        contentTable.add(entry);
+
+
+        Table dialogTable = new Table();
+        TextButton cancel = new TextButton("Cancel",skin,"small");
+        TextButton ok = new TextButton("Add User",skin,"small");
+        dialogTable.add(ok);
+        dialogTable.add(cancel);
+
+        final Dialog cantdelete = new Dialog("User",skin){
+            @Override
+            protected void result(Object object) {
+                super.result(object);
+            }
+        };
+
+        cantdelete.setSize(300,300);
+        cantdelete.setPosition(Gdx.graphics.getWidth()/2-150,Gdx.graphics.getHeight()/2-150);
+        stage.addActor(cantdelete);
+        Label userdeleteionerrorlabel = new Label("User limit exceeded,\ncant add anymore users",skin,"font","black");
+        TextButton ok2 = new TextButton("OK",skin,"small");
+        Table dialogcontent2 = new Table();
+        dialogcontent2.add(userdeleteionerrorlabel);
+        cantdelete.setVisible(false);
+        Table buttontable2 = new Table();
+        buttontable2.add(ok2);
+        ok2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                cantdelete.setVisible(false);
+            }
+        });
+        cantdelete.getButtonTable().add(buttontable2);
+        cantdelete.getContentTable().add(dialogcontent2);
+      //  dialog.text(label).top();
+
+       // dialog.button(cancel);
+        dialog.getContentTable().add(contentTable);
+        dialog.getButtonTable().add(dialogTable);
+
+        //dialog.button(ok);
+        cancel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dialog.setVisible(false);
+                entry.setText("");
+            }
+        });
+        ok.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+                dialog.setVisible(false);
+                String name = entry.getText();
+                System.out.println(name);
+                entry.setText("");
+                boolean isaddable = parent.userData.addUser(name);
+                System.out.println("Can add users? :"+isaddable);
+                if(!isaddable){
+                    cantdelete.setVisible(true);
+                    System.out.println("in Here");
+
+                }
+                box.setItems(parent.userData.getNamesList());
+
+            }
+        });
         exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -82,6 +232,7 @@ public class MenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 HUD.life =5;
                 HUD.Score =0;
+                parent.currentPlayer = box.getSelected();
                 parent.changeScreen(CricketX.GAME);
             }
         });
@@ -132,5 +283,7 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         background.dispose();
+        stage.dispose();
+        skin.dispose();
     }
 }

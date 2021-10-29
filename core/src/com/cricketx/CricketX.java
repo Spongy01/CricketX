@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.cricketx.FileManager.Settings;
+import com.cricketx.FileManager.UserData;
 import com.cricketx.Loader.AssetLoader;
 import com.cricketx.Screens.*;
 
@@ -26,6 +27,7 @@ public class CricketX extends Game {
 	public AssetLoader loader = new AssetLoader();
 	public Skin skin;
 	public Settings setting;
+	public UserData userData;
 	public HUD hud;
 
 	public final static int MENU=0;
@@ -34,6 +36,7 @@ public class CricketX extends Game {
 	public final static int ENDGAME=3;
 	public final static int PAUSE = 4;
 	public final static int GAMEOVER = 5;
+	public String currentPlayer = "";
 
 
 
@@ -81,10 +84,12 @@ public class CricketX extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		userData = new UserData();
 		this.setScreen(loadingScreen);
 	}
 	public void setData() throws IOException {
 		setting.setData();
+		userData.setData();
 	}
 
 	@Override
