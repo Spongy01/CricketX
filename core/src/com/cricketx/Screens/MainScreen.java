@@ -51,7 +51,7 @@ public class MainScreen implements Screen {
     static final float UpperBoundY =100;
     static final float LowerBoundX =200;
     static final float LowerBoundY =47.5f;
-    static boolean isVisible = false;
+
     static boolean isCollide = false;
     static boolean isCalculated = false;
     static float releasex =0;
@@ -60,7 +60,7 @@ public class MainScreen implements Screen {
 
     public MainScreen(CricketX cx){
         camera = new OrthographicCamera();
-        viewport = new FitViewport(1920f/8, 1080f/8, camera);
+        viewport = new FitViewport(1920f/4, 1080f/4, camera);
         parent = cx;
 
         textureAtlas = parent.loader.manager.get(parent.loader.atlas);
@@ -138,7 +138,7 @@ public class MainScreen implements Screen {
 
         draw();
 
-        //debugRenderer.render(world,camera.combined);
+        debugRenderer.render(world,camera.combined);
     }
     private void draw(){
         parent.batch.begin();
@@ -147,8 +147,9 @@ public class MainScreen implements Screen {
         bat.setSize(7,35);//perfect size
         Bat.setTransform(Bat.getPosition().x,Bat.getPosition().y,(float)Math.toRadians(degrees));
         Bat.setLinearVelocity(batvelx,batvely);
+        bat.setOrigin(0,0);
         bat.setRotation(degrees);
-        bat.setPosition(Bat.getPosition().x+batxcor,Bat.getPosition().y +batycor);
+        bat.setPosition(Bat.getPosition().x,Bat.getPosition().y );
         bat.draw(parent.batch);
         ball.setPosition(Ball.getPosition().x,Ball.getPosition().y);
         Ball.setAngularVelocity(0);
@@ -174,14 +175,14 @@ public class MainScreen implements Screen {
             degrees = 45;
         }
 
-        if(degrees==45){
-            batxcor = -35;
-            batycor = -7;
-        }
-        else {
-            batxcor = 29;
-            batycor = -20;
-        }
+//        if(degrees==45){
+//            batxcor = -35;
+//            batycor = -7;
+//        }
+//        else {
+//            batxcor = 29;
+//            batycor = -20;
+//        }
         batvelx=0;
         batvely=0;
         if(controller.left && Bat.getPosition().x >LowerBoundX){
