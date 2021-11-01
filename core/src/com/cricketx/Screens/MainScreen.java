@@ -226,7 +226,7 @@ public class MainScreen implements Screen {
         reachx+=190;
         float delx = reachx-releasex;
         float dely = 270;
-        float time  = 2 ;
+        float time  = 1 ;
         float vx = delx/time;
         float vy = dely/time;
         Vector2 vel = new Vector2(vx,-vy);
