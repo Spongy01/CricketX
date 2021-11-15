@@ -5,7 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class KeyboardController implements InputProcessor {
-    public boolean left,right,up,down,shift;
+    public boolean left,right,up,down,shift,space;
 
     public boolean isMouse1Down, isMouse2Down,isMouse3Down;
     public boolean isDragged;
@@ -35,7 +35,10 @@ public class KeyboardController implements InputProcessor {
                 shift = true;
                 keyProcessed = true;
                 break;
-
+            case Input.Keys.SPACE:
+                space = true;
+                keyProcessed = true;
+                break;
 
 
         }
@@ -67,7 +70,10 @@ public class KeyboardController implements InputProcessor {
                 shift = false;
                 keyProcessed = true;
                 break;
-
+            case Input.Keys.SPACE:
+                space = false;
+                keyProcessed = true;
+                break;
         }
         return keyProcessed;
     }

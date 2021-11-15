@@ -41,7 +41,7 @@ public class MainScreen implements Screen {
     static final float SCALE = 0.38f;
     static int batxcor = 0;
     static int batycor = 0;
-    static float degrees =45;
+    static float degrees =405;
     static float batvelx =0;
     static float batvely=0;
     static final float BATVEL = 120;
@@ -59,6 +59,7 @@ public class MainScreen implements Screen {
     static boolean isCalculated = false;
     static float releasex =0;
     static float reachx =0;
+    static float rotFac =-1;
 
 
     public MainScreen(CricketX cx){
@@ -166,9 +167,10 @@ public class MainScreen implements Screen {
         bat.setRotation(degrees);
         bat.setPosition(Bat.getPosition().x,Bat.getPosition().y );
         bat.draw(parent.batch);
+        ball.setOrigin(0,0);
         ball.setPosition(Ball.getPosition().x,Ball.getPosition().y);
-        Ball.setAngularVelocity(0);
-        //ball.setRotation((float) Math.toDegrees(Ball.getAngle()));
+        //Ball.setAngularVelocity(0);
+        ball.setRotation((float) Math.toDegrees(Ball.getAngle()));
         ball.draw(parent.batch);
 
         parent.batch.end();
@@ -183,21 +185,21 @@ public class MainScreen implements Screen {
     }
     private void LogicMove(){
         //isPauseCLicked();
-        if(controller.shift){
+        if(controller.shift && !controller.space){
             degrees = 315;
+            rotFac =1;
         }
-        else {
-            degrees = 45;
+        else if(!controller.shift && !controller.space){
+            degrees = 405;
+            rotFac = -1;
         }
 
-//        if(degrees==45){
-//            batxcor = -35;
-//            batycor = -7;
-//        }
-//        else {
-//            batxcor = 29;
-//            batycor = -20;
-//        }
+
+        if(controller.space){
+            if(degrees>=315 && degrees<=405){
+                degrees+= 2*90*(Gdx.graphics.getDeltaTime())*rotFac;
+            }
+        }
         batvelx=0;
         batvely=0;
         if(controller.left && Bat.getPosition().x >LowerBoundX){
