@@ -78,7 +78,7 @@ public class GameOver implements Screen {
         //Content Table for Leaderboard
         Table contentLeaderBoardTable = new Table();
         List<String> scoreboard = new List<>(skin);
-        contentLeaderBoardTable.add(scoreboard).width(200).height(200);
+        contentLeaderBoardTable.add(scoreboard).width(350).height(220);
         leaderboardDialog.getContentTable().add(contentLeaderBoardTable);
         //Fetch The LeaderBoard data
         String raw[] = parent.userData.getNamesList();
@@ -167,6 +167,7 @@ public class GameOver implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        background.dispose();
     }
 }

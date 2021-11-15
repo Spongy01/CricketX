@@ -41,6 +41,7 @@ public class MenuScreen implements Screen {
         viewport = new FitViewport(1920/2,1080/2,camera);
         parent.skin = parent.loader.manager.get(parent.loader.skin);
         skin = parent.skin;
+        background = new Texture("blur Background2.png");
 
     }
 
@@ -209,7 +210,6 @@ public class MenuScreen implements Screen {
                 if(!isaddable){
                     cantdelete.setVisible(true);
                     System.out.println("in Here");
-
                 }
                 box.setItems(parent.userData.getNamesList());
 
@@ -223,6 +223,7 @@ public class MenuScreen implements Screen {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                dispose();
                 Gdx.app.exit();
             }
         });
@@ -252,7 +253,7 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        background = new Texture("blur Background2.png");
+
         parent.batch.begin();
         parent.batch.draw(background,0,0,width,height);
         parent.batch.end();

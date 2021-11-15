@@ -100,5 +100,6 @@ public class CricketX extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		loader.manager.dispose();
 	}
 }

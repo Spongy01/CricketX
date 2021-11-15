@@ -3,6 +3,8 @@ package com.cricketx.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -44,7 +46,8 @@ public class MainScreen implements Screen {
     static float batvely=0;
     static final float BATVEL = 120;
 
-
+    Sound hit;
+    Music backgroundCrowd;
 
 
     static final float UpperBoundX =300;
@@ -77,15 +80,27 @@ public class MainScreen implements Screen {
         background = new Texture("Base.png");
         controller = new KeyboardController();
         hud = new HUD(parent.batch,parent);
+        parent.loader.queueAddAudio();
+        parent.loader.manager.finishLoading();
     }
     @Override
     public void show() {
+        hit = parent.loader.manager.get(parent.loader.hit_audio);
+        backgroundCrowd = parent.loader.manager.get(parent.loader.crowd_audio);
+        backgroundCrowd.setLooping(true);
+        backgroundCrowd.setVolume(parent.setting.musicVol);
+        if(parent.setting.isMusic) {
+            backgroundCrowd.play();
+        }
         MenuScreen.didGameOvercall = true;
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
                 hud.Score++;
                 isCollide = true;
+                if(parent.setting.isSound) {
+                    hit.play(parent.setting.soundVol);
+                }
             }
 
             @Override
@@ -272,7 +287,7 @@ public class MainScreen implements Screen {
 
     @Override
     public void hide() {
-
+        backgroundCrowd.stop();
     }
 
     @Override

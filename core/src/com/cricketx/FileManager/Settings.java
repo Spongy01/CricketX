@@ -34,17 +34,29 @@ public class Settings extends FileManager{
                     break;
                 }
                 System.out.println("Data found: "+line);
-                if(line.substring(0,9).equals("<isMusic>")){
+                if(line.startsWith("<isMusic>")){
                     int start = line.indexOf('>');
                     int end = line.lastIndexOf('<');
                     String sub  =line.substring(start+1,end);
                     isMusic = sub.equals("true");
                 }
-                if(line.substring(0,9).equals("<isSound>")){
+                if(line.startsWith("<isSound>")){
                     int start = line.indexOf('>');
                     int end = line.lastIndexOf('<');
                     String sub  =line.substring(start+1,end);
                     isSound = sub.equals("true");
+                }
+                if(line.startsWith("<musicVol>")){
+                    int start = line.indexOf('>');
+                    int end = line.lastIndexOf('<');
+                    String sub = line.substring(start+1,end);
+                    musicVol = Float.parseFloat(sub);
+                }
+                if(line.startsWith("<soundVol>")){
+                    int start = line.indexOf('>');
+                    int end = line.lastIndexOf('<');
+                    String sub = line.substring(start+1,end);
+                    soundVol = Float.parseFloat(sub);
                 }
             }
         }
