@@ -21,8 +21,9 @@ public class SettingScreen implements Screen {
     private Label musicOnOffLabel;
     private Label soundOnOffLabel;
     public static boolean fromPause = false;
-    public  static boolean fromMenu = false;
-    public SettingScreen(CricketX cx){
+    public static boolean fromMenu = false;
+
+    public SettingScreen(CricketX cx) {
         parent = cx;
         stage = new Stage(new ScreenViewport());
     }
@@ -37,7 +38,7 @@ public class SettingScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        final Slider volumeMusicSlider = new Slider(0f,1f,0.1f,false,skin);
+        final Slider volumeMusicSlider = new Slider(0f, 1f, 0.1f, false, skin);
         volumeMusicSlider.setValue(parent.setting.musicVol);
         volumeMusicSlider.addListener(new EventListener() {
             @Override
@@ -46,7 +47,7 @@ public class SettingScreen implements Screen {
                 return false;
             }
         });
-        final Slider volumeSoundSlider = new Slider(0f,1f,0.1f,false,skin);
+        final Slider volumeSoundSlider = new Slider(0f, 1f, 0.1f, false, skin);
         volumeSoundSlider.setValue(parent.setting.soundVol);
         volumeSoundSlider.addListener(new EventListener() {
             @Override
@@ -56,7 +57,7 @@ public class SettingScreen implements Screen {
             }
         });
 
-        final CheckBox musicCheckbox = new CheckBox(null,skin);
+        final CheckBox musicCheckbox = new CheckBox(null, skin);
         musicCheckbox.setChecked(parent.setting.isMusic);
         musicCheckbox.addListener(new EventListener() {
             @Override
@@ -66,7 +67,7 @@ public class SettingScreen implements Screen {
             }
         });
 
-        final CheckBox soundCheckbox = new CheckBox(null,skin);
+        final CheckBox soundCheckbox = new CheckBox(null, skin);
         soundCheckbox.setChecked(parent.setting.isSound);
         soundCheckbox.addListener(new EventListener() {
             @Override
@@ -76,47 +77,51 @@ public class SettingScreen implements Screen {
             }
         });
 
-        final TextButton backButton = new TextButton("Back",skin,"small");
+        final TextButton backButton = new TextButton("Back", skin, "small");
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(fromMenu) {
+                if (fromMenu) {
                     parent.changeScreen(CricketX.MENU);
                 }
-                if(fromPause){
+                if (fromPause) {
                     parent.changeScreen(CricketX.PAUSE);
                 }
             }
         });
-        titleLabel = new Label( "Preferences", skin );
-        volumeMusicLabel = new Label("Music Volume", skin );
-        volumeSoundLabel = new Label( "Sound Volume", skin );
-        musicOnOffLabel = new Label( "Music", skin );
-        soundOnOffLabel = new Label( "Sound", skin );
+        titleLabel = new Label("Preferences", skin);
+        volumeMusicLabel = new Label("Music Volume", skin);
+        volumeSoundLabel = new Label("Sound Volume", skin);
+        musicOnOffLabel = new Label("Music", skin);
+        soundOnOffLabel = new Label("Sound", skin);
 
         table.add(titleLabel).colspan(2);
-        table.row().pad(10,0,0,10);
+        table.row().pad(10, 0, 0, 10);
         table.add(musicOnOffLabel).left();
         table.add(musicCheckbox);
-        table.row().pad(10,0,0,10);;
+        table.row().pad(10, 0, 0, 10);
+        ;
         table.add(volumeMusicLabel).left();
         table.add(volumeMusicSlider);
-        table.row().pad(10,0,0,10);;
+        table.row().pad(10, 0, 0, 10);
+        ;
         table.add(soundOnOffLabel).left();
         table.add(soundCheckbox);
-        table.row().pad(10,0,0,10);;
+        table.row().pad(10, 0, 0, 10);
+        ;
         table.add(volumeSoundLabel).left();
         table.add(volumeSoundSlider);
 
-        table.row().pad(10,0,0,10);;
+        table.row().pad(10, 0, 0, 10);
+        ;
         table.add(backButton).colspan(2);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f,0f,0f,1);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(delta,1/30f));
+        stage.act(Math.min(delta, 1 / 30f));
         stage.draw();
     }
 

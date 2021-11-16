@@ -5,15 +5,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class KeyboardController implements InputProcessor {
-    public boolean left,right,up,down,shift,space;
+    public boolean left, right, up, down, shift, space;
 
-    public boolean isMouse1Down, isMouse2Down,isMouse3Down;
+    public boolean isMouse1Down, isMouse2Down, isMouse3Down;
     public boolean isDragged;
     public Vector2 mouseLocation = new Vector2();
+
     @Override
     public boolean keyDown(int keycode) {
-        boolean keyProcessed= false;
-        switch (keycode){
+        boolean keyProcessed = false;
+        switch (keycode) {
             case Input.Keys
                     .LEFT:
                 left = true;
@@ -21,15 +22,18 @@ public class KeyboardController implements InputProcessor {
                 break;
             case Input.Keys
                     .RIGHT:
-                right = true;keyProcessed = true;
+                right = true;
+                keyProcessed = true;
                 break;
             case Input.Keys
                     .UP:
-                up = true;keyProcessed = true;
+                up = true;
+                keyProcessed = true;
                 break;
             case Input.Keys
                     .DOWN:
-                down = true;keyProcessed = true;
+                down = true;
+                keyProcessed = true;
                 break;
             case Input.Keys.SHIFT_LEFT:
                 shift = true;
@@ -47,8 +51,8 @@ public class KeyboardController implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        boolean keyProcessed= false;
-        switch (keycode){
+        boolean keyProcessed = false;
+        switch (keycode) {
             case Input.Keys
                     .LEFT:
                 left = false;
@@ -56,15 +60,18 @@ public class KeyboardController implements InputProcessor {
                 break;
             case Input.Keys
                     .RIGHT:
-                right = false;keyProcessed = true;
+                right = false;
+                keyProcessed = true;
                 break;
             case Input.Keys
                     .UP:
-                up = false;keyProcessed = true;
+                up = false;
+                keyProcessed = true;
                 break;
             case Input.Keys
                     .DOWN:
-                down = false;keyProcessed = true;
+                down = false;
+                keyProcessed = true;
                 break;
             case Input.Keys.SHIFT_LEFT:
                 shift = false;
@@ -86,11 +93,11 @@ public class KeyboardController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        if(button == 0){
+        if (button == 0) {
             isMouse1Down = true;
-        }else if(button == 1){
+        } else if (button == 1) {
             isMouse2Down = true;
-        }else if(button == 2){
+        } else if (button == 2) {
             isMouse3Down = true;
         }
         mouseLocation.x = screenX;
@@ -102,11 +109,11 @@ public class KeyboardController implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         isDragged = false;
         //System.out.println(button);
-        if(button == 0){
+        if (button == 0) {
             isMouse1Down = false;
-        }else if(button == 1){
+        } else if (button == 1) {
             isMouse2Down = false;
-        }else if(button == 2){
+        } else if (button == 2) {
             isMouse3Down = false;
         }
         mouseLocation.x = screenX;

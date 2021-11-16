@@ -19,11 +19,13 @@ public class PauseScreen implements Screen {
     Stage stage;
     Skin skin;
     CricketX parent;
-    public PauseScreen(CricketX p){
+
+    public PauseScreen(CricketX p) {
         parent = p;
         stage = new Stage(new ScreenViewport());
         skin = parent.loader.manager.get(parent.loader.skin);
     }
+
     @Override
     public void show() {
         stage.clear();
@@ -31,12 +33,12 @@ public class PauseScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(true);
-        TextButton resume = new TextButton("Resume",skin);
-        TextButton settings = new TextButton("Settings",skin);
-        TextButton exit = new TextButton("Exit",skin);
+        TextButton resume = new TextButton("Resume", skin);
+        TextButton settings = new TextButton("Settings", skin);
+        TextButton exit = new TextButton("Exit", skin);
 
         table.add(resume).fillX().uniformX();
-        table.row().pad(10,0,10,0);
+        table.row().pad(10, 0, 10, 0);
         table.add(settings).fillX().uniformX();
         table.row();
         table.add(exit).fillX().uniformX();
@@ -72,7 +74,7 @@ public class PauseScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f,0f,0f,1);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();

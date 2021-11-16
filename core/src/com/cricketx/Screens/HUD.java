@@ -27,19 +27,20 @@ public class HUD {
     Label lives_label;
     public static int life;
     String formatedScore;
-    public HUD(SpriteBatch batch, final CricketX p){
-        viewport = new FitViewport(1920f/4, 1080f/4, new OrthographicCamera());
-        stage = new Stage(viewport,batch);
+
+    public HUD(SpriteBatch batch, final CricketX p) {
+        viewport = new FitViewport(1920f / 4, 1080f / 4, new OrthographicCamera());
+        stage = new Stage(viewport, batch);
         Score = 0;
         formatedScore = Integer.toString(Score);
         pause = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pause_icon.png")))));
         life = 5;
-        Table pausemenu= new Table();
+        Table pausemenu = new Table();
         pausemenu.top().left();
         pausemenu.setFillParent(true);
         pausemenu.setDebug(true);
-        pausemenu.add(pause).pad(5,5,5,5);
-        pausemenu.addListener(new ClickListener(){
+        pausemenu.add(pause).pad(5, 5, 5, 5);
+        pausemenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 parent.changeScreen(CricketX.PAUSE);
@@ -48,14 +49,14 @@ public class HUD {
         });
 
 
-        Table score=  new Table();
+        Table score = new Table();
         score.bottom().left();
         score.setFillParent(true);
         score.setVisible(true);
         score.setDebug(true);
         parent = p;
-        score_label = new Label("Score : "+formatedScore, parent.skin,"font","black");
-        score.add(score_label).pad(10,10,20,10);
+        score_label = new Label("Score : " + formatedScore, parent.skin, "font", "black");
+        score.add(score_label).pad(10, 10, 20, 10);
         stage.addActor(score);
         stage.addActor(pausemenu);
 
@@ -63,18 +64,19 @@ public class HUD {
         lives.bottom().right();
         lives.setFillParent(true);
         lives.setDebug(true);
-        lives_label = new Label("Lives : "+life, parent.skin,"black");
-        lives.add(lives_label).pad(10,10,10,10);
+        lives_label = new Label("Lives : " + life, parent.skin, "black");
+        lives.add(lives_label).pad(10, 10, 10, 10);
         stage.addActor(lives);
 
     }
-    public void update(){
+
+    public void update() {
         formatedScore = Integer.toString(Score);
-        score_label.setText("Score : "+formatedScore);
-        lives_label.setText("Lives : "+life);
+        score_label.setText("Score : " + formatedScore);
+        lives_label.setText("Lives : " + life);
     }
 
-    public void resize(int w, int h){
-        viewport.update(w,h,true);
+    public void resize(int w, int h) {
+        viewport.update(w, h, true);
     }
 }
