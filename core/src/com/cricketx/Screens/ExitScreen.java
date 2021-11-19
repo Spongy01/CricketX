@@ -5,9 +5,11 @@ import com.cricketx.CricketX;
 
 public class ExitScreen implements Screen {
     private CricketX parent;
-    public ExitScreen(CricketX cx){
+
+    public ExitScreen(CricketX cx) {
         parent = cx;
     }
+
     @Override
     public void show() {
 

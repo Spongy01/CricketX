@@ -17,18 +17,19 @@ public class AssetLoader {
     public final String hit_audio = "audio/hit.mp3";
     public final String crowd_audio = "audio/crowd.mp3";
 
-    public void queueAddSkin(){
+    public void queueAddSkin() {
         SkinLoader.SkinParameter param = new SkinLoader.SkinParameter("glassy/skin/glassy-ui.atlas");
-        manager.load(skin, Skin.class,param);
+        manager.load(skin, Skin.class, param);
         SkinLoader.SkinParameter param2 = new SkinLoader.SkinParameter("comic/skin/comic-ui.atlas");
-        manager.load(skin_c, Skin.class,param2);
-    }
-    public void queueAddAtlas(){
-        // textureAtlas = new TextureAtlas(atlas);
-        manager.load(atlas,TextureAtlas.class);
+        manager.load(skin_c, Skin.class, param2);
     }
 
-    public void queueAddAudio(){
+    public void queueAddAtlas() {
+        // textureAtlas = new TextureAtlas(atlas);
+        manager.load(atlas, TextureAtlas.class);
+    }
+
+    public void queueAddAudio() {
         manager.load(hit_audio, Sound.class);
         manager.load(crowd_audio, Music.class);
     }

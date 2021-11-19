@@ -10,12 +10,14 @@ import com.cricketx.CricketX;
 public class LoadingScreen implements Screen {
 
     private CricketX parent;
-    public LoadingScreen(CricketX cx){
+
+    public LoadingScreen(CricketX cx) {
         parent = cx;
         parent.loader.queueAddAtlas();
         parent.loader.queueAddSkin();
         parent.loader.manager.finishLoading();
     }
+
     @Override
     public void show() {
 

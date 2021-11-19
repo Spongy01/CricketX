@@ -1,4 +1,4 @@
 <isMusic>false</isMusic>
 <isSound>true</isSound>
-<musicVol>1.0</musicVol>
+<musicVol>0.6</musicVol>
 <soundVol>0.6</soundVol>
